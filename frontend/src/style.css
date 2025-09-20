@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    background: #f7fafc;
+}
+
+button{
+    &:hover{
+        cursor: pointer;
+    }
+}
