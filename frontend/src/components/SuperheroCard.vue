@@ -1,21 +1,27 @@
 <template>
-    <div class="bg-white shadow rounded p-4 flex items-center space-x-4">
-        <img v-if="hero.image_path" :src="imageUrl(hero.image_path)" class="w-20 h-20 object-cover rounded" />
-        <div class="flex-1">
-            <h3 class="font-semibold">{{ hero.nickname }}</h3>
-            <p class="text-sm text-gray-500">{{ hero.real_name }}</p>
+    <div @click="goToDetails"
+        class="bg-white shadow-md rounded-lg overflow-hidden cursor-pointer transform transition hover:shadow-xl">
+        <!-- Image -->
+        <div v-if="hero.image_path" class="h-[80%] w-full overflow-hidden">
+            <img :src="imageUrl(hero.image_path)" class="w-full h-full object-cover" />
         </div>
-        <div class="flex flex-col space-y-2">
-            <router-link :to="`/superheroes/${hero.id}`" class="text-sm">Details</router-link>
-            <router-link :to="`/edit/${hero.id}`" class="text-sm">Edit</router-link>
+
+        <!-- Info -->
+        <div class="p-4">
+            <h3 class="font-semibold text-lg text-gray-800 truncate">{{ hero.nickname }}</h3>
+            <p class="text-sm text-gray-500 truncate">{{ hero.real_name }}</p>
         </div>
     </div>
 </template>
 
-
 <script setup>
-import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { imageUrl } from '../utils/imageUrl'
 
 const props = defineProps({ hero: Object })
-const imageUrl = (path) => path.startsWith('http') ? path : `${import.meta.env.VITE_API_BASE?.replace('/api', '') || 'http://localhost:3000'}${path.startsWith('/') ? path : '/' + path}`
+const router = useRouter()
+
+const goToDetails = () => {
+    router.push(`/superheroes/${props.hero.id}`)
+}
 </script>

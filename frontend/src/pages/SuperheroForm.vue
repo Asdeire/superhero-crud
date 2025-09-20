@@ -10,11 +10,11 @@
                 <BaseInput v-model="form.real_name" placeholder="Real Name" required />
             </div>
 
-            <BaseInput v-model="form.originDescription" placeholder="Origin Description" type="textarea" />
+            <BaseInput v-model="form.origin_description" placeholder="Origin Description" type="textarea" />
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <BaseInput v-model="form.superpowers" placeholder="Superpowers (comma separated)" />
-                <BaseInput v-model="form.catchPhrase" placeholder="Catch Phrase" />
+                <BaseInput v-model="form.catch_phrase" placeholder="Catch Phrase" />
             </div>
 
             <!-- Existing images -->
@@ -40,12 +40,13 @@
 
             <!-- Buttons -->
             <div class="flex gap-3">
-                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded">
+                <Button type="submit" variant="primary">
                     {{ isEdit ? 'Save' : 'Create' }}
-                </button>
-                <button type="button" @click="onCancel" class="px-4 py-2 border rounded">Cancel</button>
+                </Button>
+                <Button type="button" variant="secondary" @click="onCancel">
+                    Cancel
+                </Button>
             </div>
-
         </form>
     </div>
 </template>
@@ -57,6 +58,7 @@ import { useSuperheroStore } from '../stores/superhero'
 import { imageUrl } from '../utils/imageUrl'
 
 import BaseInput from '../components/ui/BaseInput.vue'
+import Button from '../components/ui/Button.vue'
 import ImageCard from '../components/ImageCard.vue'
 
 const route = useRoute()
@@ -112,10 +114,10 @@ onMounted(async () => {
         const data = store.current || {}
         form.value = {
             nickname: data.nickname || '',
-            realName: data.real_name || '',
-            originDescription: data.origin_description || '',
+            real_name: data.real_name || '',
+            origin_description: data.origin_description || '',
             superpowers: data.superpowers || '',
-            catchPhrase: data.catch_phrase || ''
+            catch_phrase: data.catch_phrase || ''
         }
         existingImages.value = data.images || []
     }
@@ -148,7 +150,7 @@ const onSubmit = async () => {
         }
     } catch (err) {
         console.error(err)
-        alert('Error saving superhero — check console')
+        alert('Error saving superhero')
     }
 }
 
