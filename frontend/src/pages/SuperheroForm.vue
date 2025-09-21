@@ -96,10 +96,10 @@ const removeNewFile = id => {
     }
 }
 
-const deleteExistingImage = async id => {
+const deleteExistingImage = async (imageId) => {
     if (!confirm('Are you sure you want to delete this image?')) return
     try {
-        await store.deleteImage(id, id)
+        await store.deleteImage(id, imageId)
         await store.fetchById(id)
         existingImages.value = store.current?.images || []
     } catch (err) {
